@@ -16,7 +16,11 @@ router.use(function(request, response, next)
 var app = express();
 app.use('/', router);
 
-require('./routes/main/main');
+// Index page
+router.get('/', function(request, response)
+{
+	response.send("Index page...");
+});
 
 // Start application
 app.listen(8181);
