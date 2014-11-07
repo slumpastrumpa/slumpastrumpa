@@ -13,6 +13,6 @@ CREATE TABLE Customer
 ,	city			NVARCHAR(100)	NOT NULL
 ,	zipcode			VARCHAR(10)	NOT NULL
 
-,	PRIMARY KEY(customerId)
-,	UNIQUE KEY(customerNumber)
+,	CONSTRAINT pk_Customer			PRIMARY KEY(customerId)
+,	CONSTRAINT s1_Customer			UNIQUE KEY(customerNumber)
 )

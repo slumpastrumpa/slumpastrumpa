@@ -22,11 +22,13 @@ client.connect();
 // Drop tables if needed
 if (doDrop)
 {
-	tables.reverse().forEach(function(table)
+	tables.reverse();
+	tables.forEach(function(table)
 	{
 		console.log('Dropping table "' + table + '"...');
 		client.query('DROP TABLE IF EXISTS ' + table);
 	});
+	tables.reverse();
 }
 
 // Execute table scripts
