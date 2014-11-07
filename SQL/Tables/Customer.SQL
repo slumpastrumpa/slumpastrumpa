@@ -16,6 +16,7 @@ CREATE TABLE Customer
 ,	password		NVARCHAR(100)	NOT NULL
 ,	phoneNumber		NVARCHAR(100)	NOT NULL
 
-,	CONSTRAINT PK_Customer			PRIMARY KEY(customerId)
-,	CONSTRAINT S1_Customer			UNIQUE KEY(customerNumber)
+,	CONSTRAINT PK_Customer			PRIMARY KEY (customerId)
+,	CONSTRAINT S1_Customer			UNIQUE KEY (customerNumber)
+,	CONSTRAINT S2_Customer			UNIQUE KEY (email)
 )
