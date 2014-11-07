@@ -28,5 +28,4 @@ node_modules
 .lock-wscript
 
 # Configurations
-JavaScript/sql-executor/config.json
-
+JavaScript/sql-executor/config.js
