@@ -12,7 +12,10 @@ CREATE TABLE Customer
 ,	addressDescription	NVARCHAR(100)	NOT NULL
 ,	city			NVARCHAR(100)	NOT NULL
 ,	zipcode			VARCHAR(10)	NOT NULL
+,	email			NVARCHAR(100)	NOT NULL
+,	password		NVARCHAR(100)	NOT NULL
+,	phoneNumber		NVARCHAR(100)	NOT NULL
 
-,	CONSTRAINT pk_Customer			PRIMARY KEY(customerId)
-,	CONSTRAINT s1_Customer			UNIQUE KEY(customerNumber)
+,	CONSTRAINT PK_Customer			PRIMARY KEY(customerId)
+,	CONSTRAINT S1_Customer			UNIQUE KEY(customerNumber)
 )

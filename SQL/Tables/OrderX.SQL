@@ -5,7 +5,7 @@ CREATE TABLE OrderX
 ,	customerId	INT		NOT NULL
 ,	quantity	INT		NOT NULL
 
-,	CONSTRAINT pk_OrderX		PRIMARY KEY (orderId)
-,	CONSTRAINT s1_OrderX		UNIQUE KEY (orderNumber)
-,	CONSTRAINT fk_Order_Customer	FOREIGN KEY (customerId) REFERENCES Customer (customerId) ON DELETE RESTRICT
+,	CONSTRAINT PK_OrderX		PRIMARY KEY (orderId)
+,	CONSTRAINT S1_OrderX		UNIQUE KEY (orderNumber)
+,	CONSTRAINT FK_Order_Customer	FOREIGN KEY (customerId) REFERENCES Customer (customerId) ON DELETE RESTRICT
 )
