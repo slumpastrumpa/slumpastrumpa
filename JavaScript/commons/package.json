@@ -1,11 +1,14 @@
 {
   "name": "commons",
   "version": "1.0.0",
-  "description": "",
+  "description": "Contains the common parts for the slumpastrumpa project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "dependencies": {
+    "sequelize": "~2.0.0-rc2"
+  }
 }
