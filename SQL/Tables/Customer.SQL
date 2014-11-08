@@ -13,7 +13,7 @@ CREATE TABLE Customer
 ,	city			NVARCHAR(100)	NOT NULL
 ,	zipcode			VARCHAR(10)	NOT NULL
 ,	email			NVARCHAR(100)	NOT NULL
-,	password		NVARCHAR(100)	NOT NULL
+,	password		NVARCHAR(100)
 ,	phoneNumber		NVARCHAR(100)	NOT NULL
 
 ,	CONSTRAINT PK_Customer			PRIMARY KEY (customerId)

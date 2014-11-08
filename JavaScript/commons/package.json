@@ -9,6 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "sequelize": "~2.0.0-rc2"
+    "sequelize": "~2.0.0-rc2",
+    "mysql": "~2.5.3"
   }
 }
