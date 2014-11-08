@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>Slumpa Strumpa :: Logga In</title>
+	</head>
+	<body>
+
+		<div data-if="root.message.length > 0">
+		    <p>#{root.message}</p>
+		</div>
+
+		<div data-if="root.error.length > 0">
+		    <p><b>#{root.error}</b></p>
+		</div>
+
+		<div data-if="root.message.length == 0">
+			<form method="POST">
+				<p>Email (eller kundnummer):</p> <input name="identifier" />
+				<input type="submit" />
+			</form>
+		</div>
+	</body>
+</html>
