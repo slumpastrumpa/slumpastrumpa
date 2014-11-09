@@ -7,6 +7,15 @@ module.exports = function(sequelize, DataTypes)
 		orderId: 				{ type: DataTypes.INTEGER, 		primaryKey: true, autoIncrement: true } 
 	,	orderNumber: 			{ type: DataTypes.STRING(30),	allowNull: false, unique: true }
 	,	quantity:				{ type: DataTypes.INTEGER,		allowNull: false, validate: { min: 1 } }
+	},
+	{
+		classMethods:
+		{
+			associate: function(models)
+			{
+				Order.belongsTo(models.Customer, { foreignKey: 'customerId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
+			}
+		}
 	});
 
 	return Order;

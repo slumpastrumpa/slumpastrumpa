@@ -31,6 +31,7 @@ module.exports = function(app)
 		models.Customer
 			.find(
 			{
+				include: [ models.Order, models.Subscription ],
 				where: models.Sequelize.or
 				(
 					{ email: identifier },

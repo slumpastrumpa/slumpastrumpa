@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<title>Slumpa Strumpa :: Mina sidor</title>
+	</head>
+	<body>
+
+		<h3>Orders</h3>
+		<div data-for="order in root.customer.Orders">
+		    #{order.orderNumber}
+		</div>
+
+		<h3>Subscriptions</h3>
+		<div data-for="subscription in root.customer.Subscriptions">
+		    #{subscription.subscriptionNumber}
+		</div>
+
+	</body>
+</html>

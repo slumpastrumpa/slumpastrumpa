@@ -26,6 +26,7 @@ module.exports = function(sequelize, DataTypes)
 			associate: function(models)
 			{
 				Customer.hasMany(models.Order, { foreignKey: 'customerId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
+				Customer.hasMany(models.ResetPasswordToken, { foreignKey: 'customerId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
 				Customer.hasMany(models.Subscription, { foreignKey: 'customerId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
 			}
 		}

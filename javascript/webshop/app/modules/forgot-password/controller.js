@@ -74,9 +74,9 @@ module.exports = function(app)
 			where:
 			{
 				token: token,
-				expiresAt: { lte: new Date() }
+				expiresAt: { gte: new Date() }
 			}
-		}).success(function (error, token)
+		}).done(function (error, token)
 		{
 			if (token)
 			{
@@ -92,30 +92,39 @@ module.exports = function(app)
 	app.post('/glomt-losenord/:token', function(request, response)
 	{
 		var token = request.params.token;
-		var newPassword = request.params.newPassword;
-		var newPasswordRepeat = request.params.newPasswordRepeat;
+		var newPassword = request.body.newPassword;
+		var newPasswordRepeat = request.body.newPasswordRepeat;
 
-		if (!newPassword || newPassword !== newPasswordRepeat)
+		if (!newPassword)
 		{
-				response.render('set-password/set-password-template', { token: token, message: '', error: 'De anvigna lösenorden är inte likadana.' });
+				response.render('forgot-password/set-password-template', { message: '', error: 'Ange lösenord.' });
+				return;
+		}
+
+		if (newPassword !== newPasswordRepeat)
+		{
+				response.render('forgot-password/set-password-template', { message: '', error: 'De anvigna lösenorden är inte likadana.' });
 				return;
 		}
 
 		models.ResetPasswordToken.find(
 		{
+			include: [ models.Customer ],
 			where:
 			{
 				token: token,
-				expiresAt: { lte: new Date() }
+				expiresAt: { gte: new Date() }
 			}
-		}).success(function (error, token)
+		}).done(function (error, object)
 		{
-			if (token)
+			if (object)
 			{
 				var hashedPassword = bcrypt.hashSync(newPassword);
-				response.render('forgot-password/set-password-template', { token: token, message: 'Ditt lösenord har uppdateras!', error: '' });
+				object.Customer.password = hashedPassword;
+				object.Customer.save([ 'password' ]);
+				object.destroy();
 
-				// TODO: FIX!
+				response.render('forgot-password/set-password-template', { message: 'Ditt lösenord har uppdateras!', error: '' });
 			}
 			else
 			{

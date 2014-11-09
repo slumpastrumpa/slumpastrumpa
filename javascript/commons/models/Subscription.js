@@ -9,6 +9,15 @@ module.exports = function(sequelize, DataTypes)
 	,	quantity:				{ type: DataTypes.INTEGER,		allowNull: false, validate: { min: 1 } }
 	,	startDate:				{ type: DataTypes.DATE,			allowNull: false }
 	,	orderInterval:			{ type: DataTypes.INTEGER,		allowNull: false }
+	},
+	{
+		classMethods:
+		{
+			associate: function(models)
+			{
+				Subscription.belongsTo(models.Customer, { foreignKey: 'customerId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
+			}
+		}
 	});
 
 	return Subscription;
