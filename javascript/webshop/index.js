@@ -14,6 +14,8 @@ app.use(session(
 	secret: "1234567ABC",
 	name: "SlumpaStrumpaSession"
 }));
+console.log(__dirname);
+app.use('/static', express.static(__dirname + '/app/static'))
 
 // Set up view engine
 app.engine('html', gaikan);
