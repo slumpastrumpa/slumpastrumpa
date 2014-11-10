@@ -12,10 +12,10 @@ module.exports = function(sequelize, DataTypes)
 	,	lastName:				{ type: DataTypes.STRING(100),	allowNull: true }
 	,	organizationNumber:		{ type: DataTypes.STRING(15),	allowNull: true }
 	,	companyName:			{ type: DataTypes.STRING(100),	allowNull: true }
-	,	address:				{ type: DataTypes.STRING(100),	allowNull: false }
+	,	address:				{ type: DataTypes.STRING(100),	allowNull: false, validate: { notEmpty: true } }
 	,	addressDescription:		{ type: DataTypes.STRING(100),	allowNull: false }
-	,	city:					{ type: DataTypes.STRING(100),	allowNull: false }
-	,	zipcode:				{ type: DataTypes.STRING(10),	allowNull: false }
+	,	city:					{ type: DataTypes.STRING(100),	allowNull: false, validate: { notEmpty: true } }
+	,	zipcode:				{ type: DataTypes.STRING(10),	allowNull: false, validate: { notEmpty: true } }
 	,	email:					{ type: DataTypes.STRING(100),	allowNull: false, validate: { isEmail: true } }
 	,	password:				{ type: DataTypes.STRING(100),	allowNull: true }
 	,	phoneNumber:			{ type: DataTypes.STRING(100),	allowNull: false }
