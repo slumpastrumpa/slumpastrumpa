@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes)
 	,	addressDescription:		{ type: DataTypes.STRING(100),	allowNull: false }
 	,	city:					{ type: DataTypes.STRING(100),	allowNull: false, validate: { notEmpty: true } }
 	,	zipcode:				{ type: DataTypes.STRING(10),	allowNull: false, validate: { notEmpty: true } }
-	,	email:					{ type: DataTypes.STRING(100),	allowNull: false, validate: { isEmail: true } }
+	,	email:					{ type: DataTypes.STRING(100),	allowNull: false, unique: true, validate: { isEmail: true } }
 	,	password:				{ type: DataTypes.STRING(100),	allowNull: true }
 	,	phoneNumber:			{ type: DataTypes.STRING(100),	allowNull: false }
 	},
