@@ -1,5 +1,4 @@
 var intervenous	= require('intravenous')
-,	path 		= require('path')
 ,	webshop		= require('./classes')
 ,	common		= require('../commons/classes');
 
