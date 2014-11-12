@@ -3,7 +3,7 @@ var App = function(router)
 	this.router = router;
 };
 
-	// Starts the application
+// Starts the application
 App.prototype.start = function()
 {
 	this.router.listen(8181);
