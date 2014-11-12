@@ -1,48 +1,33 @@
-var express = require('express')
-,	bodyParser = require('body-parser')
-,	cookieParser = require('cookie-parser')
-,	session = require('express-session')
-,	gaikan = require('gaikan')
-,	fs = require('fs');
+var intervenous	= require('intravenous')
+,	path 		= require('path')
+,	webshop		= require('./classes')
+,	common		= require('../commons/classes');
 
-// Create application
-var app = express();
-app.use(bodyParser.urlencoded());
-app.use(cookieParser());
-app.use(session(
+// Create IOC container
+var container = intervenous.create();
+
+// Register all classes
+common.concat(webshop).forEach(function (item)
 {
-	secret: "1234567ABC",
-	name: "SlumpaStrumpaSession"
-}));
-console.log(__dirname);
-app.use('/static', express.static(__dirname + '/app/static'))
+	var fullyQualifiedPath = item.path + '/' + item.name + '.js';
 
-// Set up view engine
-app.engine('html', gaikan);
-app.set('view engine', '.html');
-app.set('views', __dirname + '/app/modules');
+	console.log("Registering " + fullyQualifiedPath);
+	container.register(item.name, require(fullyQualifiedPath), "singleton");
+});
 
-// Bootstrap controllers
-var modulesPath = __dirname + '/app/modules/';
-var modules = fs.readdirSync(modulesPath);
-modules.forEach(function(module)
-{
-	var path = modulesPath + module + '/controller.js';
-	var fileStat = fs.statSync(path);
+// Get the application
+var app = container.get("App");
 
-	if (fileStat.isFile())
+// Wire any non-wired classes
+common.concat(webshop)
+	.filter(function (item)
 	{
-		console.log("Loading controller '" + path + "'");
-		require(path)(app);
-	}
-});
+		return item.auto;
+	})
+	.forEach(function (item)
+	{
+		container.get(item.name);
+	});
 
-// Log requests
-app.use(function(request, response, next)
-{
-	console.log(request.method + ' ' + request.path);
-	next();
-});
-
-// Start server
-app.listen(8181);
+// Start the main application
+app.start();

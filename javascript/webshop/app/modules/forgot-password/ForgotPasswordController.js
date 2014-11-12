@@ -1,10 +1,9 @@
-var models = require('../../../../commons/models')
-,	bcrypt = require('bcrypt-nodejs')
+var bcrypt = require('bcrypt-nodejs')
 ,	uuid = require('node-uuid');
 
-module.exports = function(app)
+var ForgotPasswordController = function(router, models)
 {
-	app.get('/glomt-losenord', function(request, response)
+	router.get('/glomt-losenord', function(request, response)
 	{
 		// If we are logged in already, redirect to my pages
 		if (request.session.user)
@@ -13,10 +12,10 @@ module.exports = function(app)
 			return;
 		}
 
-		response.render('forgot-password/template', { message: '', error: '' });
+		response.render('forgot-password/forgot-password', { message: '', error: '' });
 	});
 
-	app.post('/glomt-losenord', function(request, response)
+	router.post('/glomt-losenord', function(request, response)
 	{
 		// If we are logged in already, redirect to my pages
 		if (request.session.user)
@@ -27,7 +26,7 @@ module.exports = function(app)
 
 		var identifier = request.body.identifier;
 
-		models.Customer
+		models.model("Customer")
 			.find(
 			{
 				where: models.Sequelize.or
@@ -40,7 +39,7 @@ module.exports = function(app)
 			{
 				if (!result)
 				{
-					response.render('forgot-password', { message: '', error: 'Ingen användare hittades.' });
+					response.render('forgot-password/forgot-password', { message: '', error: 'Ingen användare hittades.' });
 				}
 				else
 				{
@@ -49,7 +48,7 @@ module.exports = function(app)
 					var expiresAt = new Date();
 					expiresAt.setHours(expiresAt.getHours() + 12);
 
-					models.ResetPasswordToken.create(
+					models.model("ResetPasswordToken").create(
 					{
 						token: token,
 						expiresAt: expiresAt,
@@ -59,17 +58,17 @@ module.exports = function(app)
 						// TODO: SEND MAIL :)))
 
 						var message = 'Ett mail kommer inom kort att skickas till dig med information om hur du byter ditt lösenord.'
-						response.render('forgot-password/template', { message: message, error: '' });
+						response.render('forgot-password/forgot-password', { message: message, error: '' });
 					});
 				}
 			});
 	});
 
-	app.get('/glomt-losenord/:token', function(request, response)
+	router.get('/glomt-losenord/:token', function(request, response)
 	{
 		var token = request.params.token;
 
-		models.ResetPasswordToken.find(
+		models.model("ResetPasswordToken").find(
 		{
 			where:
 			{
@@ -80,7 +79,7 @@ module.exports = function(app)
 		{
 			if (token)
 			{
-				response.render('forgot-password/set-password-template', { token: token, message: '', error: '' });
+				response.render('forgot-password/set-password', { token: token, message: '', error: '' });
 			}
 			else
 			{
@@ -89,7 +88,7 @@ module.exports = function(app)
 		});
 	});
 
-	app.post('/glomt-losenord/:token', function(request, response)
+	router.post('/glomt-losenord/:token', function(request, response)
 	{
 		var token = request.params.token;
 		var newPassword = request.body.newPassword;
@@ -97,19 +96,19 @@ module.exports = function(app)
 
 		if (!newPassword)
 		{
-				response.render('forgot-password/set-password-template', { message: '', error: 'Ange lösenord.' });
+				response.render('forgot-password/set-password', { message: '', error: 'Ange lösenord.' });
 				return;
 		}
 
 		if (newPassword !== newPasswordRepeat)
 		{
-				response.render('forgot-password/set-password-template', { message: '', error: 'De anvigna lösenorden är inte likadana.' });
+				response.render('forgot-password/set-password', { message: '', error: 'De anvigna lösenorden är inte likadana.' });
 				return;
 		}
 
-		models.ResetPasswordToken.find(
+		models.model("ResetPasswordToken").find(
 		{
-			include: [ models.Customer ],
+			include: [ models.model("Customer") ],
 			where:
 			{
 				token: token,
@@ -124,7 +123,7 @@ module.exports = function(app)
 				object.Customer.save([ 'password' ]);
 				object.destroy();
 
-				response.render('forgot-password/set-password-template', { message: 'Ditt lösenord har uppdateras!', error: '' });
+				response.render('forgot-password/set-password', { message: 'Ditt lösenord har uppdateras!', error: '' });
 			}
 			else
 			{
@@ -133,3 +132,6 @@ module.exports = function(app)
 		});
 	});
 }
+
+ForgotPasswordController.$inject = [ "Router", "Models" ];
+module.exports = ForgotPasswordController;

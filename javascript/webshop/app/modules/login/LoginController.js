@@ -1,10 +1,8 @@
-var models = require('../../../../commons/models')
-,	bcrypt = require('bcrypt-nodejs')
-,	session = require('express-session')
+var bcrypt = require('bcrypt-nodejs')
 
-module.exports = function(app)
+var LoginController = function(router, models)
 {
-	app.get('/logga-in', function(request, response)
+	router.get('/logga-in', function(request, response)
 	{
 		// If we are logged in already, redirect to my pages
 		if (request.session.user)
@@ -13,10 +11,10 @@ module.exports = function(app)
 			return;
 		}
 
-		response.render('login/template', { error: '' });
+		response.render('login/login', { error: '' });
 	});
 
-	app.post('/logga-in', function(request, response)
+	router.post('/logga-in', function(request, response)
 	{
 		// If we are logged in already, redirect to my pages
 		if (request.session.user)
@@ -28,23 +26,23 @@ module.exports = function(app)
 		var identifier = request.param("identifier");
 		var password = request.param("password");
 
-		models.Customer
+		models.model("Customer")
 			.find(
 			{
-				include: [ models.Order, models.Subscription ],
+				include: [ models.model("Order"), models.model("Subscription") ],
 				where: models.Sequelize.or
 				(
 					{ email: identifier },
 					{ customerNumber: identifier }
 				)
 			})
-			.success(function(result)
+			.then(function(result)
 			{
 				if (!result)
 				{
-					response.render('login/template', { error: 'Felaktigt användarnamn eller lösenord' });
+					response.render('login/login', { error: 'Felaktigt användarnamn eller lösenord' });
 				}
-				else
+				else if (result.password)
 				{
 					var correctPassword = bcrypt.compareSync(password, result.password);
 					if (correctPassword)
@@ -54,15 +52,22 @@ module.exports = function(app)
 					}
 					else
 					{
-						response.render('login/template', { error: 'Felaktigt användarnamn eller lösenord' });
+						response.render('login/login', { error: 'Felaktigt användarnamn eller lösenord' });
 					}
+				}
+				else
+				{
+					response.render('login/login', { error: 'Felaktigt användarnamn eller lösenord' });
 				}
 			});
 	});
 
-	app.get('/logga-ut', function(request, response)
+	router.get('/logga-ut', function(request, response)
 	{
 		request.session.user = null;
 		response.redirect("/");
 	});
 }
+
+LoginController.$inject = [ "Router", "Models" ];
+module.exports = LoginController;
