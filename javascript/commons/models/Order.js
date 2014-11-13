@@ -15,6 +15,8 @@ module.exports = function(sequelize, DataTypes)
 			associate: function(models)
 			{
 				Order.belongsTo(models.Customer, { foreignKey: 'customerId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
+				Order.belongsTo(models.PaymentMethod, { foreignKey: 'paymentMethodId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
+				Order.belongsTo(models.Charity, { foreignKey: 'charityId', onDelete: "RESTRICT", onUpdate: "RESTRICT" });
 			}
 		}
 	});

@@ -33,6 +33,8 @@ var Models = function()
 		}
 	});
 
+	sequelize.sync();
+
 	// Export
 	this.Sequelize = Sequelize;
 	this.model = function(modelName)
