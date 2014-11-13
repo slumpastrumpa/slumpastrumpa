@@ -49,3 +49,44 @@ UNION
 SELECT	2
 ,	'md5key2'
 ,	'???';
+
+-- Payment methods
+INSERT INTO PaymentMethods
+(
+	name
+,	paymentCode
+,	paymentServiceProviderId
+)
+
+-- Klarna invoice
+SELECT	'Klarna faktura'
+,	''
+,	1
+
+-- DIBS kortbetalningar
+UNION
+SELECT	'MasterCard'
+,	'MC'
+,	2
+UNION
+SELECT	'VISA'
+,	'VISA'
+,	2
+
+-- DIBS bankbetalningar
+UNION
+SELECT	'Swedbank'
+,	'SWD_A'
+,	2
+UNION
+SELECT	'Handelsbanken'
+,	'??'
+,	2
+UNION
+SELECT	'Nordea'
+,	'NDB'
+,	2
+UNION
+SELECT	'SEB'
+,	'SEB'
+,	2;
