@@ -18,8 +18,14 @@ var Router = function()
 		name: "SlumpaStrumpaSession"
 	}));
 	this.app.use('/static', express.static(__dirname + '/static'))
+	this.app.use(function (request, response, next)
+	{
+		response.locals.session = request.session;
+		next();
+	});
 
 	// Set up view engine
+	gaikan.options.layout = 'app/layout';
 	this.app.engine('html', gaikan);
 	this.app.set('view engine', '.html');
 	this.app.set('views', __dirname + '/modules');

@@ -1,17 +1,9 @@
-<html>
-	<head>
-		<title>Slumpa Strumpa :: Logga in</title>
-	</head>
-	<body>
+<div data-if="root.error.length > 0">
+    <p><b>#{root.error}</b></p>
+</div>
 
-		<div data-if="root.error.length > 0">
-		    <p><b>#{root.error}</b></p>
-		</div>
-
-		<form method="POST">
-			<p>Email (eller kundnummer):</p> <input name="identifier" />
-			<p>Lösenord:</p> <input name="password" type="password" />
-			<input type="submit" />
-		</form>
-	</body>
-</html>
+<form method="POST">
+	<p>Email (eller kundnummer):</p> <input name="identifier" />
+	<p>Lösenord:</p> <input name="password" type="password" />
+	<input type="submit" />
+</form>

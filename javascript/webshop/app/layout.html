@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>Slumpa Strumpa</title>
+	</head>
+	<body>
+
+		@{var isLoggedIn = root.session.user}
+		<div data-if="isLoggedIn">
+			<p>Hej #{root.session.user.firstName}!</p>
+			<p>
+				<a href="/">Start</a> |
+				<a href="/mina-sidor">Mina sidor</a> |
+				<a href="/logga-ut">Logga ut</a>
+			</p>
+		</div>
+
+		<div data-if="!isLoggedIn">
+			<a href="/logga-in">Logga in</a>
+		</div>
+
+		<hr />
+
+		<div data-fragment="content"></div>
+
+		<div>
+			<br />
+			<hr />
+			Sexy footer
+		</div>
+
+	</body>
+</html>
