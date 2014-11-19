@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title>Slumpa Strumpa :: Abonnera</title>
+	</head>
+	<body>
+
+		<p>
+			<b>Hur många par vill du ha vid varje leverans?</b>
+		</p>
+		<p>
+			<select name="quantity">
+				<option value="1" selected>1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+			</select>
+		</p>
+
+		<br />
+
+		<p>
+			<b>Hur ofta vill du få leverans?</b>
+		</p>
+		<p>
+			<select name="interval">
+				<option value="1" selected>Varje månad</option>
+				<option value="2">Varannan månad</option>
+				<option value="3">En gång i kvartalet</option>
+				<option value="6">En gång om halvåret</option>
+				<option value="12">En gång om året</option>
+			</select>
+		</p>
+
+		<br />
+
+		<p><b>Vilken välgörenhet vill du skänka till?</b></p>
+		<p>
+			<div data-for="charity, key in root.charities">
+				<p><input type="radio" name="charityId" value="#{charity.charityId}" /> #{charity.charityName}</p>
+			</div>
+		</p>
+
+	</body>
+</html>
