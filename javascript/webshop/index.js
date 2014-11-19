@@ -29,4 +29,5 @@ common.concat(webshop)
 	});
 
 // Start the main application
+app.initialize();
 app.start();
