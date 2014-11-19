@@ -1,9 +1,15 @@
-<h3>Orders</h3>
+<h3>Order:</h3>
+<div data-if="root.customer.Orders.length == 0">
+	<p>Du har inga tidigare order</p>
+</div>
 <div data-for="order in root.customer.Orders">
     #{order.orderNumber}
 </div>
 
-<h3>Subscriptions</h3>
+<h3>Abonnemang:</h3>
+<div data-if="root.customer.Subscriptions.length == 0">
+	<p>Du har inga aktiva abonnemang</p>
+</div>
 <div data-for="subscription in root.customer.Subscriptions">
     #{subscription.subscriptionNumber}
 </div>
