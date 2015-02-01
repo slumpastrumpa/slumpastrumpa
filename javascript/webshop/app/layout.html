@@ -4,6 +4,10 @@
 	</head>
 	<body>
 
+		<a href="/">
+			<h1>slumpastrumpa</h1>
+		</a>
+
 		@{var isLoggedIn = root.session.user}
 		<div data-if="isLoggedIn">
 			<p>Hej #{root.session.user.firstName}!</p>
@@ -25,7 +29,8 @@
 		<div>
 			<br />
 			<hr />
-			Sexy footer
+			<p>Sexy footer</p>
+			<p>Copyright 2014-2015 slumpastrumpa.se - All rights reserved</p>
 		</div>
 
 	</body>

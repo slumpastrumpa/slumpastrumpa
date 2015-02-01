@@ -8,7 +8,6 @@ module.exports = function(sequelize, DataTypes)
 	,	name: 							{ type: DataTypes.STRING(30),	allowNull: false, unique: true }
 	},
 	{
-		timestamps: false,
 		classMethods:
 		{
 			associate: function(models)
