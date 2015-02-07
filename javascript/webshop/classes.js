@@ -11,4 +11,5 @@ module.exports =
 ,	{ name: "MyPagesController",			path: "./app/modules/my-pages",				auto: true }
 ,	{ name: "PlaceOrderController",			path: "./app/modules/place-order",			auto: true }
 ,	{ name: "SubscribeController",			path: "./app/modules/subscribe",			auto: true }
+,	{ name: "AddressLookupController",		path: "./app/modules/address-lookup",		auto: true }
 ]

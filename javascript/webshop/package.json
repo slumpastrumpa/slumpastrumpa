@@ -16,6 +16,7 @@
     "express-session": "~1.9.1",
     "bcrypt-nodejs": "0.0.3",
     "node-uuid": "~1.4.1",
-    "intravenous": "~0.1.4-beta"
+    "intravenous": "~0.1.4-beta",
+    "klarna-nodejs": "1.0.0"
   }
 }
