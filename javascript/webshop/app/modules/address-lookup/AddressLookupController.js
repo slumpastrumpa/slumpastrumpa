@@ -1,11 +1,11 @@
 var Klarna = require('klarna-nodejs')
 
-var AddressLookupController = function(router, models)
+var AddressLookupController = function(router, paymentServiceProviderService)
 {
 	router.get('/address/person/:identifier', function(request, response)
 	{
 		var identifier = request.params.identifier;
-		getAddresses(identifier, false, function(addresses)
+		getAddresses(identifier, false, paymentServiceProviderService, function(addresses)
 		{
 			response.status(200);
 			response.json(addresses);
@@ -19,7 +19,7 @@ var AddressLookupController = function(router, models)
 	router.get('/address/company/:identifier', function(request, response)
 	{
 		var identifier = request.params.identifier;
-		getAddresses(identifier, true, function(addresses)
+		getAddresses(identifier, true, paymentServiceProviderService, function(addresses)
 		{
 			response.status(200);
 			response.json(addresses);
@@ -31,33 +31,55 @@ var AddressLookupController = function(router, models)
 	});
 }
 
-function getAddresses(identifier, isCompany, success, failure)
+function getAddresses(identifier, isCompany, paymentServiceProviderService, success, failure)
 {
-	var parameters =
+	paymentServiceProviderService.getPaymentServiceProvider('klarna', function(paymentServiceProvider)
 	{
-		eid: 123,
-		sharedSecret: '...',
-		address: 'https://payment.testdrive.klarna.com:443'
-	};
+		var serviceURL 		= paymentServiceProvider.getParameter('serviceURL');
+		var eid		 		= paymentServiceProvider.getParameter('eid');
+		var sharedSecret 	= paymentServiceProvider.getParameter('sharedSecret');
 
-	var klarna = new Klarna(parameters);
-	klarna.getAddresses(identifier, function(addresses)
-	{
-		var output = [];
-		addresses.forEach(function(address)
+		var parameters =
 		{
-			if (address.isCompany === isCompany)
+			eid: parseInt(eid),
+			sharedSecret: sharedSecret,
+			address: serviceURL
+		};
+
+		var klarna = new Klarna(parameters);
+		klarna.getAddresses(identifier, function(addresses)
+		{
+			var output = [];
+			addresses.forEach(function(address)
 			{
-				delete address.isCompany;
-				output.push(address);
-			}
+				if (address.isCompany === isCompany)
+				{
+					delete address.isCompany;
+					output.push(address);
+				}
+			});
+			success(output);
+		}, function(error)
+		{
+			console.log(error);
+			var output =
+			{
+				code: error.code,
+				message: error.faultString
+			};
+			failure(output);
 		});
-		success(output);
-	}, function(error)
+
+	}, function()
 	{
-		failure(error);
+		var output =
+		{
+			code: '???',
+			message: 'Could not find Klarna configuration'
+		};
+		failure(output);
 	});
 }
 
-AddressLookupController.$inject = [ "Router" ];
+AddressLookupController.$inject = [ 'Router', 'PaymentServiceProviderService' ];
 module.exports = AddressLookupController;
